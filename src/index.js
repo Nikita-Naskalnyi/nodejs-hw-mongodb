@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log('USER:', process.env.MONGODB_USER); // ← Перевірка!
+console.log('USER:', process.env.MONGODB_USER);
 
 import mongoose from 'mongoose';
 import { startServer } from './server.js';
