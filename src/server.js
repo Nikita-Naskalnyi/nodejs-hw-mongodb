@@ -1,23 +1,25 @@
 import express from 'express';
 import cors from 'cors';
-import { getAllContacts, getContactById } from './controllers/contacts.js';
 import logger from 'pino-http';
+
+import contactsRouter from './routers/contacts.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 export const startServer = () => {
   const app = express();
 
   app.use(cors());
+  app.use(express.json());
   app.use(logger());
 
-  app.get('/contacts', getAllContacts);
-  app.get('/contacts/:id', getContactById);
+  app.use('/contacts', contactsRouter);
 
-  app.use((req, res) => {
-    res.status(404).json({ message: 'Not found' });
-  });
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`✅ Server is running on port ${PORT}`);
   });
 };
