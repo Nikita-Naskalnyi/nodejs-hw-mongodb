@@ -15,6 +15,10 @@ export const startServer = () => {
 
   app.use('/contacts', contactsRouter);
 
+  app.get('/', (req, res) => {
+    res.status(200).json({ message: 'API is running!' });
+  });
+
   app.use(notFoundHandler);
   app.use(errorHandler);
 

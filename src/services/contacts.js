@@ -1,10 +1,14 @@
 import { Contact } from '../models/contact.js';
+import mongoose from 'mongoose';
 
 export const fetchContacts = () => {
-  return Contact.find();
+  return Contact.find({}, '-__v');
 };
 
 export const fetchContactById = (id) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return null;
+  }
   return Contact.findById(id);
 };
 
@@ -14,14 +18,13 @@ export const createContact = async (data) => {
 };
 
 export const updateContactById = async (id, data) => {
-  const updated = await Contact.findByIdAndUpdate(id, data, {
+  return Contact.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: true,
+    projection: '-__v',
   });
-  return updated;
 };
 
 export const deleteContactById = async (id) => {
-  const deleted = await Contact.findByIdAndDelete(id);
-  return deleted;
+  return Contact.findByIdAndDelete(id);
 };
