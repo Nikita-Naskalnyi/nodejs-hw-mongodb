@@ -2,11 +2,12 @@ import * as contactsService from '../services/contacts.js';
 import createError from 'http-errors';
 
 export const getAllContacts = async (req, res) => {
-  const contacts = await contactsService.fetchContacts();
+  const paginationResult = await contactsService.fetchContacts(req.query);
+
   res.status(200).json({
     status: 200,
     message: 'Successfully found contacts!',
-    data: contacts,
+    data: paginationResult,
   });
 };
 
@@ -28,7 +29,6 @@ export const getContactById = async (req, res) => {
 export const createContact = async (req, res) => {
   const newContact = await contactsService.createContact(req.body);
 
-  // Видаляємо __v з відповіді, якщо є
   const contactData = newContact.toObject();
   delete contactData.__v;
 
