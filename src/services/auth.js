@@ -119,3 +119,7 @@ export const logout = async (refreshToken) => {
     throw createHttpError(403, 'Session not found');
   }
 };
+
+export const hashPassword = async (password) => {
+  return await bcrypt.hash(password, 10);
+};
