@@ -1,5 +1,6 @@
 import * as contactsService from '../services/contacts.js';
 import createError from 'http-errors';
+import {Contact} from '../models/contact.js';
 
 export const getAllContacts = async (req, res) => {
   const paginationResult = await contactsService.fetchContacts(
@@ -33,37 +34,45 @@ export const getContactById = async (req, res) => {
 };
 
 export const createContact = async (req, res) => {
-  const newContact = await contactsService.createContact(
-    req.user._id,
-    req.body
-  );
+  const { _id: userId } = req.user;
+  const photo = req.file?.path || '';
 
-  const contactData = newContact.toObject();
-  delete contactData.__v;
+  const newContact = await Contact.create({
+    ...req.body,
+    userId,
+    photo,
+  });
 
   res.status(201).json({
-    status: 201,
-    message: 'Successfully created a contact!',
-    data: contactData,
+    status: 'success',
+    message: 'Contact created',
+    data: {
+      contact: newContact,
+    },
   });
 };
 
 export const updateContact = async (req, res) => {
   const { contactId } = req.params;
-  const updated = await contactsService.updateContactById(
-    req.user._id,
-    contactId,
-    req.body
-  );
+  const { _id: userId } = req.user;
 
-  if (!updated) {
-    throw createError(404, 'Contact not found');
+  const contact = await Contact.findOne({ _id: contactId, userId });
+  if (!contact) throw createError(404, 'Contact not found');
+
+  if (req.file?.path) {
+    req.body.photo = req.file.path;
   }
 
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully patched a contact!',
-    data: updated,
+  const updated = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
+
+  res.json({
+    status: 'success',
+    message: 'Contact updated',
+    data: {
+      contact: updated,
+    },
   });
 };
 
