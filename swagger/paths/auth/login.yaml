@@ -1,0 +1,36 @@
+post:
+  tags:
+    - Auth
+  summary: User login
+  operationId: loginUser
+  description: Authenticates a user and returns a token
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: user@example.com
+            password:
+              type: string
+              example: yourPassword123
+  responses:
+    '200':
+      description: Authenticated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: your.jwt.token
+    '401':
+      description: Invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

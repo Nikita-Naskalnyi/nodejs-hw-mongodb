@@ -1,0 +1,38 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Контактний Менеджер API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description:
+    Це бекенд API для керування контактами користувачів з підтримкою автентифікації, завантаження зображень та відновлення паролю через email.
+tags:
+  - name: Contacts
+    description: Everything about managing user contacts
+servers:
+  - url: http://localhost:3000
+  # - url: #посилання на задеплоєний сайт
+paths:
+  /contacts:
+    $ref: '../swagger/paths/contacts/index.yaml'
+  /contacts/{id}:
+    $ref: '../swagger/paths/contacts/{id}/index.yaml'
+  /auth/register:
+    $ref: '../swagger/paths/auth/register.yaml'
+  /auth/login:
+    $ref: '../swagger/paths/auth/login.yaml'
+  /auth/current:
+    $ref: '../swagger/paths/auth/current.yaml'
+  /auth/refresh:
+    $ref: '../swagger/paths/auth/refresh.yaml'
+  /auth/logout:
+    $ref: '../swagger/paths/auth/logout.yaml'
+  /auth/send-reset-email:
+    $ref: '../swagger/paths/auth/send-reset-email.yaml'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      

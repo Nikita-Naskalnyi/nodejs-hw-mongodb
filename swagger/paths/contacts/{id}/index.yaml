@@ -1,0 +1,92 @@
+get:
+  tags:
+    - Contacts
+  summary: Get contact by ID
+  operationId: getContactById
+  description: Returns a contact based on ID
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The contact ID
+  responses:
+    '200':
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Contact.yaml'
+    '404':
+      description: Contact not found
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
+
+patch:
+  tags:
+    - Contacts
+  summary: Update contact by ID
+  operationId: updateContact
+  description: Updates contact information
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/Contact.yaml'
+  responses:
+    '200':
+      description: Contact updated
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Contact.yaml'
+    '400':
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
+    '404':
+      description: Contact not found
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
+
+delete:
+  tags:
+    - Contacts
+  summary: Delete contact by ID
+  operationId: deleteContact
+  description: Deletes a contact
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: Contact deleted
+    '404':
+      description: Contact not found
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
