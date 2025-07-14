@@ -9,6 +9,8 @@ import cookieParser from 'cookie-parser';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
+import { swaggerServe, swaggerSetup } from './swagger/swagger.js';
+
 export const startServer = () => {
   const app = express();
 
@@ -24,9 +26,12 @@ export const startServer = () => {
   app.get('/', (req, res) => {
     res.status(200).json({ message: 'API is running!' });
   });
+  
+  app.use('/api-docs', swaggerServe, swaggerSetup);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
+  
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {

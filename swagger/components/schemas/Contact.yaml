@@ -1,0 +1,33 @@
+title: Contact
+description: Модель контакта
+type: object
+properties:
+  _id:
+    type: string
+    example: 1234567890abcdef12345678
+  name:
+    type: string
+    example: John Doe
+  phoneNumber:
+    type: string
+    example: +1234567890
+  email:
+    type: string
+    example: john@example.com
+  contactType:
+    type: string
+    enum: [work, home, personal]
+    example: work
+  isFavourite:
+    type: boolean
+    example: false
+  photo:
+    type: string
+    example: https://your-cloud.com/photo.jpg
+  createdAt:
+    type: string
+    format: date-time
+  updatedAt:
+    type: string
+    format: date-time
+
