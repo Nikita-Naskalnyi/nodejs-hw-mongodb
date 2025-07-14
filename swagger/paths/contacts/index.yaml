@@ -28,6 +28,12 @@ get:
             type: array
             items:
               $ref: '../../components/schemas/Contact.yaml'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
 
 post:
   tags:
@@ -56,3 +62,10 @@ post:
         application/json:
           schema:
             $ref: '../../components/schemas/Error.yaml'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+

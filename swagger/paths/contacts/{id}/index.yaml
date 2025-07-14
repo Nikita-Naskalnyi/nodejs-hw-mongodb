@@ -20,6 +20,12 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/Contact.yaml'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
     '404':
       description: Contact not found
       content:
@@ -60,6 +66,12 @@ patch:
         application/json:
           schema:
             $ref: '../../../components/schemas/Error.yaml'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
     '404':
       description: Contact not found
       content:
@@ -84,6 +96,12 @@ delete:
   responses:
     '204':
       description: Contact deleted
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
     '404':
       description: Contact not found
       content:
