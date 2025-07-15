@@ -38,7 +38,7 @@ patch:
     - Contacts
   summary: Update contact by ID
   operationId: updateContact
-  description: Updates contact information
+  description: Updates contact information, including photo upload
   security:
     - bearerAuth: []
   parameters:
@@ -50,9 +50,24 @@ patch:
   requestBody:
     required: true
     content:
-      application/json:
+      multipart/form-data:
         schema:
-          $ref: '../../../components/schemas/Contact.yaml'
+          type: object
+          properties:
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            email:
+              type: string
+            contactType:
+              type: string
+              enum: [work, home, personal]
+            isFavourite:
+              type: boolean
+            photo:
+              type: string
+              format: binary
   responses:
     '200':
       description: Contact updated
