@@ -20,6 +20,12 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/Contact.yaml'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
     '404':
       description: Contact not found
       content:
@@ -32,7 +38,7 @@ patch:
     - Contacts
   summary: Update contact by ID
   operationId: updateContact
-  description: Updates contact information
+  description: Updates contact information, including photo upload
   security:
     - bearerAuth: []
   parameters:
@@ -44,9 +50,24 @@ patch:
   requestBody:
     required: true
     content:
-      application/json:
+      multipart/form-data:
         schema:
-          $ref: '../../../components/schemas/Contact.yaml'
+          type: object
+          properties:
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            email:
+              type: string
+            contactType:
+              type: string
+              enum: [work, home, personal]
+            isFavourite:
+              type: boolean
+            photo:
+              type: string
+              format: binary
   responses:
     '200':
       description: Contact updated
@@ -56,6 +77,12 @@ patch:
             $ref: '../../../components/schemas/Contact.yaml'
     '400':
       description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
+    '401':
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -84,6 +111,12 @@ delete:
   responses:
     '204':
       description: Contact deleted
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/Error.yaml'
     '404':
       description: Contact not found
       content:

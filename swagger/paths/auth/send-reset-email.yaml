@@ -21,6 +21,12 @@ post:
         application/json:
           schema:
             $ref: '../../components/schemas/Message.yaml'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
     '404':
       description: User not found
       content:

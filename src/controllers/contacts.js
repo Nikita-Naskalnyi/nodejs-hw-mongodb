@@ -1,6 +1,6 @@
 import * as contactsService from '../services/contacts.js';
 import createError from 'http-errors';
-import {Contact} from '../models/contact.js';
+import { Contact } from '../models/contact.js';
 
 export const getAllContacts = async (req, res) => {
   const paginationResult = await contactsService.fetchContacts(
@@ -59,8 +59,8 @@ export const updateContact = async (req, res) => {
   const contact = await Contact.findOne({ _id: contactId, userId });
   if (!contact) throw createError(404, 'Contact not found');
 
-  if (req.file?.path) {
-    req.body.photo = req.file.path;
+  if (req.file) {
+    req.body.photo = req.file.secure_url || req.file.path || req.file.url;
   }
 
   const updated = await Contact.findByIdAndUpdate(contactId, req.body, {
