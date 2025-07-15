@@ -11,8 +11,8 @@ tags:
   - name: Contacts
     description: Everything about managing user contacts
 servers:
-  - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-dpn6.onrender.com
+  - url: http://localhost:3000
 paths:
   /contacts:
     $ref: '../swagger/paths/contacts/index.yaml'
